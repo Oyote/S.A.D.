@@ -1,0 +1,42 @@
+html,
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif
+}
+
+a { color: #515151 }
+
+main {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.logo {
+    border: .1vw solid #2d2d2d;
+    width: 70%;
+    height: 20%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    height: 40%;    
+}
+form input, button { 
+    height: 20%;
+    border: none;
+}
+form input { 
+    padding-left: 3%;
+    border-bottom: .1vw solid #2d2d2d
+}

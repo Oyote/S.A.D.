@@ -1,0 +1,39 @@
+#header button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    color: white;
+    background: none;
+    border: none;
+    transition: .5s ease-out
+}
+
+#header button:focus { outline: none }
+
+#central div.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 1.2em;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 90%;
+    height: 12vh;
+    margin: .5vh 0 .5vh 0;
+    border: .1vw solid #2d2d2d;
+}
+
+div.content div.display {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    font-size: .55em;
+}
+
+.h-3 {
+    height: 8vh !important;
+}
