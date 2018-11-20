@@ -21,7 +21,7 @@ const loadContent = data => {
 
 const loadSubject = async area => {
     
-    let res = await fetch('http://localhost:1234/disciplina/' + area, {
+    let res = await fetch('http://192.168.49.164:1234/disciplina/' + area, {
         method: 'GET'
     })
     
@@ -61,7 +61,7 @@ const loadSubject = async area => {
                 central.removeChild(central.firstElementChild) 
             }
             let title = element.querySelector('label').innerText
-            let res = await fetch('http://localhost:1234/disciplina/' + title)
+            let res = await fetch('http://192.168.49.164:1234/disciplina/' + title)
             let data = await res.json()
             loadContent(data)
         })

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const db = require('./dbconnect/mysql')
 const auth = require('./routes/auth')
 const upload = require('./routes/upload')
+const download = require('./routes/download')
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 
 app.use('/auth', auth)
 app.use('/up', upload)
+app.use('/download', download)
 
 app.get('/disciplina/:q*?', (req, res) => {
     let query
