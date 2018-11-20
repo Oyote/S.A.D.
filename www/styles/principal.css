@@ -20,7 +20,7 @@
     padding-left: 5%;
     padding-right: 5%;
     width: 90%;
-    height: 12vh;
+    height: 12vh !important;
     margin: .5vh 0 .5vh 0;
     border: .1vw solid #2d2d2d;
 }
@@ -36,4 +36,26 @@ div.content div.display {
 
 .h-3 {
     height: 8vh !important;
+}
+
+#header div.return {
+    display: flex;
+    align-items: center;
+    width: 96%;
+    height: 5vh;
+    padding: 0 0 1vw 4vw;
+    margin-top: 2vw;
+    font-size: 1.2em;
+    color: white
+}
+
+div.return span {
+    width: 100%;
+    padding-left: 16%
+}
+div.test {
+    height: 50vh;
+    border: .1vw solid red;
+    width: 90%;
+    margin: 1vh;
 }

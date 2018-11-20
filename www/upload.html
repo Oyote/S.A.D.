@@ -7,20 +7,36 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
-    <link rel="stylesheet" type="text/css" href="styles/send.css" />
+    <link rel="stylesheet" type="text/css" href="styles/upload.css" />
     <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" />
-    <script src="scripts/fileUpload.js" async defer></script>
+    <script src="scripts/upload.js" async defer></script>
 </head>
 
 <body>
     <main>
         <div id="header">
+            <div class="return">
+                <a href="principal.html"><i class="fas fa-chevron-left fa-lg"></i></a>
+                <span>Voltar</span>
+            </div>
         </div>
         <div id="central">
-            <form>
-                <input type="file" name="arq">
-                <input type="submit">
-            </form>
+            <div id="fileUpload">
+                <form>
+                    <label>
+                        <span>Selecione um arquivo</span>
+                        <i class="fas fa-file-upload"></i>
+                        <input type="file" name="arq">
+                    </label>
+                </form>
+                <select class="disciplina">
+                    <option value="0" disabled selected>Selecione uma disciplina</option>
+                </select>
+                <select class="conteudo" disabled>
+                    <option value="0" disabled selected>Selecione um conteúdo</option>
+                </select>
+                <button>Enviar</button>
+            </div>
         </div>
         <div id="menu">
             <a href="principal.html">

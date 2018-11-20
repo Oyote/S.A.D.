@@ -9,12 +9,19 @@ const loadContent = data => {
         div.className = 'content'
         div.classList.add('h-3')
         central.appendChild(div)
+
+        div.addEventListener('click', ev => {
+            while(central.firstElementChild) {
+                central.removeChild(central.firstElementChild) 
+            }
+                        
+        })
     })
 }
 
 const loadSubject = async area => {
     
-    let res = await fetch('http://192.168.49.129:1234/disciplina/' + area, {
+    let res = await fetch('http://localhost:1234/disciplina/' + area, {
         method: 'GET'
     })
     
@@ -49,11 +56,12 @@ const loadSubject = async area => {
     })    
 
     central.querySelectorAll('.content').forEach(element => {
-        element.addEventListener('click', async a => {
+        element.addEventListener('click', async () => {
+            while(central.firstElementChild) {
+                central.removeChild(central.firstElementChild) 
+            }
             let title = element.querySelector('label').innerText
-            central.querySelectorAll('.content').forEach(element => element.remove()) 
-            
-            let res = await fetch('http://192.168.49.129:1234/disciplina/' + title)
+            let res = await fetch('http://localhost:1234/disciplina/' + title)
             let data = await res.json()
             loadContent(data)
         })
