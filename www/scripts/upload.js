@@ -9,7 +9,7 @@
     let disciplina = ''
     let conteudo = ''
 
-    let res = await fetch('http://192.168.49.164:1234/disciplina')
+    let res = await fetch('http://localhost:1234/disciplina')
     let data = await res.json()
 
     data.forEach((element, index) => {
@@ -28,7 +28,7 @@
             select[1].setAttribute = 'disabled'
             select[1].innerHTML = ''
             disciplina = selected.innerText
-            let res = await fetch('http://192.168.49.164:1234/disciplina/' + disciplina)
+            let res = await fetch('http://localhost:1234/disciplina/' + disciplina)
             let data = await res.json()
 
             data.forEach((element, index) => {
@@ -62,7 +62,7 @@
             formData.append('titulo', fileTitleInput.value)
             formData.append('arq', fileInput.files[0])
             
-            let res = fetch(`http://192.168.49.164:1234/up/${disciplina}/asdf`, {
+            let res = fetch(`http://localhost:1234/up/${disciplina}/asdf`, {
                 method: 'POST',
                 body: formData
             })

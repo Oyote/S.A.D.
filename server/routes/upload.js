@@ -19,19 +19,19 @@ const storageConfig = multer.diskStorage({
 let upload = multer({ storage: storageConfig })
 
 router.post('/:disc/:cont', upload.single('arq'), (req, res, next) => {
-    let disciplina = req.params.disc
-    let conteudo = req.params.cont
-    let query = `INSERT INTO arquivo (nome, nome_original, tipo, idconteudo) 
-        VALUES ('${req.file.filename}', '${req.file.originalname}', '${req.file.mimetype}', 
-        (SELECT idconteudo FROM conteudo WHERE nome = '${conteudo}'))`
+    // let conteudo = req.params.cont
 
-    console.log(req.file)
+    let query = `INSERT INTO arquivo (titulo, nome, tipo, idconteudo) 
+        VALUES('${req.body.titulo}', '${req.file.filename}', '${req.file.mimetype}',
+        (SELECT idconteudo FROM conteudo WHERE nome = '${req.params.cont}'))
+        `
     
     db.query(query, (err, result) => {
         if (err || result == '') {
             console.log(err)
             res.status(404).send('Not Found')
         } else {
+            console.log('File data inserted')
             res.status(200).send(result)
         }
     })
