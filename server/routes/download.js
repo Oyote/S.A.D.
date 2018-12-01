@@ -30,5 +30,4 @@ router.get('/:cont', (req, res) => {
         }
     })
 })
-
 module.exports = router

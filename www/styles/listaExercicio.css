@@ -1,0 +1,63 @@
+#central div.lista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+}
+
+#central div.lista textarea {
+    width: 100%;
+    border-radius: 5px;
+    text-align: justify;
+    padding: 2%;
+}
+
+#central div.lista div.questao {
+    width: 100%;
+}
+
+#central div.lista div.questao div.pergunta {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: 23vh;
+    width: 100%
+}
+
+#central div.lista div.questao div.tipo {
+    display: flex;
+    justify-content: space-between;
+    width: 98%;
+    margin-bottom: 7vw;
+}
+#central div.lista div.questao div.alternativas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5vw;
+    width: 100%;
+}
+
+#central div.lista div.questao div.alternativas div.alternativa {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 8vh;
+    margin-bottom: 3vw
+}
+
+
+#central div.lista div.questao div.alternativas div.alternativa textarea {
+    width: 85%;
+    height: 100%;
+}
+
+#central div.lista button {
+    margin-bottom: 8vw;
+}
+
+#central div.lista #upload {
+    width: 100%;
+    height: 35vh;
+}

@@ -2,8 +2,8 @@
     const container = document.querySelector('div#fileUpload')
     const form = container.querySelector('form')
     const label = container.querySelector('label')
-    const fileInput = container.querySelector('input[type=file]')
-    const fileTitleInput = container.querySelector('input[type=text]')
+    const fileInput = container.querySelector('#fileUpload form label input[type=file]')
+    const titledesc = container.querySelectorAll('#fileUpload input[type=text]')
     const select = container.querySelectorAll('select')
     const button = container.querySelector('button')
     let disciplina = ''
@@ -59,7 +59,8 @@
             console.log(form)
             
             let formData = new FormData()
-            formData.append('titulo', fileTitleInput.value)
+            formData.append('titulo', titledesc[0].value)
+            formData.append('descricao', titledesc[1].value)
             formData.append('arq', fileInput.files[0])
             
             let res = fetch(`http://localhost:1234/up/${disciplina}/asdf`, {

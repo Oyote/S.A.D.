@@ -1,6 +1,6 @@
 #central { justify-content: center }
 
-#fileUpload {
+#upload {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -9,7 +9,7 @@
     width: 80vw;
 }
 
-#fileUpload input[type=file]  {
+#upload input[type=file]  {
     width: 0;
     height: 0;
     opacity: 0;
@@ -18,7 +18,7 @@
     z-index: -1;
 }
 
-#fileUpload label {
+#upload label {
     display: flex;
     justify-content: space-evenly;
     align-items: center; 
@@ -29,9 +29,9 @@
     border-radius: 4px
 }
 
-#fileUpload label, i { color: white }
+#upload label, i { color: white }
 
-#fileUpload select {
+#upload select {
     min-width: 70vw;
     max-width: 70vw;
     height: 8vw;
@@ -42,7 +42,7 @@ select option {
     min-width: 40vw;
 }
 
-#fileUpload input[type="text"] {
+#upload input[type="text"] {
     min-width: 70vw;
     max-width: 70vw;
     height: 8vw;
@@ -53,7 +53,7 @@ select option {
 
 ::placeholder { color: black }
 
-#fileUpload button {
+#upload button, .genButt {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
