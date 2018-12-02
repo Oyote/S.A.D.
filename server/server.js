@@ -1,4 +1,4 @@
-const port = process.env.PORT || 1234
+const port = 1234
 const http = require('http')
 const app = require('./app')
 const server = http.createServer(app)

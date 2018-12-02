@@ -1,29 +1,78 @@
 const form = document.querySelector('form')
-const field = form.querySelectorAll('input')
 const submit = form.querySelector('button')
+const radioInputContainer = form.querySelector('div')
+let disciplina = ''
 
-submit.addEventListener('click', async ev => {
-    ev.preventDefault()
-    field.forEach(element => element.value = element.value.trim())
-    
-    // if (field[2].value !== field[3].value) console.log('Senhas diferentes bro')
-    if (field[1].value.indexOf(' ') >= 0 || field[2].value.indexOf(' ') >= 0) console.log('Usuario e senha não podem ter espaço')
+radioInputContainer.addEventListener('click', async ev => {
+    if (ev.target.innerText.trim() == 'Professor' && !form.querySelector('select')) {
+        let select = document.createElement('select')
 
-    //Eu não usei formData por que tava dando ruim, mas pretendo mudar
-    let data = await {
-        "nome": field[0].value,
-        "usuario": field[1].value,
-        "senha": field[2].value
+        let res = await fetch('http://localhost:1234/disciplina')
+        let data = await res.json()
+
+        data.forEach(element => {
+            let option =  document.createElement('option')
+            
+            option.innerText = element.nome
+            select.appendChild(option)
+        })
+        form.querySelectorAll('div')[1].appendChild(select)
+        form.style.height = '50%'
+
+        disciplina = select.options[select.selectedIndex].innerText
+
+        select.addEventListener('click', () => disciplina = select.options[select.selectedIndex].innerText )
+    } else {
+        form.style.height = '45%'
+        form.querySelectorAll('div')[1].innerHTML = ''
+        disciplina = ''
     }
-    document.querySelector()
+})
 
-    let res = await fetch('http://localhost:1234/siginup', {
+submit.addEventListener('click', async () => {
+    let input = form.querySelectorAll('input')
+    let radio = form.querySelector('input[name="alunoprof"]:checked')
+
+    if (radio == null) return swal('Ops', 'Selecione o tipo de usuário!', 'error')
+    
+    let data = {
+        nome: input[0].value.trim(),
+        usuario: input[1].value.toLowerCase(),
+        senha: input[2].value,
+        confSenha: input[3].value,
+        alunoprof: radio.parentElement.innerText.trim(),
+        disciplina: disciplina
+    }
+
+    console.log(data.disciplina)
+
+    if (!data.nome || !data.usuario || !data.senha || !data.confSenha)
+        return swal('Ops!', 'Os campos não podem ser vazios!', 'error')
+    if (data.usuario.includes(' ') || data.senha.includes(' '))
+        return swal('Ops!', 'Os campos "Usuário" e "Senha" não podem conter espaços!', 'error')
+    if (data.senha.length < 5)
+        return swal('Ops!', 'Senha muito curta!')
+    if (data.senha !== data.confSenha)
+        return swal('Ops!', 'As senhas não coincidem!', 'error')
+        
+    let res = await fetch('http://localhost:1234/user/signup', {
         method: 'POST',
-        body: JSON.stringify(data),
         headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        }
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     })
 
-    window.location.href = 'index.html'
+    if (res.status == 200) {
+        swal('', '', 'success')
+        setTimeout(() => {
+            window.location.href = 'index.html'
+        }, 1000)
+    } else {
+        swal('', '', 'error')
+        setTimeout(() => {
+            window.location.href = 'index.html'
+        }, 1000)
+    }
 })

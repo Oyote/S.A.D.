@@ -2,24 +2,111 @@
     const lista = document.querySelector('#central div.lista')
     const addQst = lista.querySelector('button')
     const questao = lista.querySelector('div.questao')
-    
+    const upload = document.querySelector('#upload')
+    const select = upload.querySelectorAll('select')
+    let disciplina = ''
+    let conteudo = ''
+
+    //Set first radio input to true | Ln11
     questao.querySelector('div.tipo form input[type="radio"]').checked = true
     
-    // const addEv = container => {
-    //     container.querySelectorAll('div.alternativas div.alternativa').forEach(element => 
-    //         element.lastElementChild.addEventListener('click', ev => {
-    //         container.querySelectorAll('div.alternativas div.alternativa').forEach(element => {
-    //             if (element != ev.target.parentElement) {
-    //                 element.lastElementChild.src = 'images/no.svg'
-    //                 element.dataset.resp = false
-    //             } else {
-    //                 element.lastElementChild.src = 'images/ok.svg'
-    //                 element.dataset.resp = true
-    //             }
-    //         })
-    //     }))
-    // }
-    
+    //Set send options area | Ln14 - Ln50
+    let res = await fetch('http://localhost:1234/disciplina')
+    let data = await res.json()
+
+    data.forEach((element, index) => {
+        let option = document.createElement('option')
+        option.value = index + 1
+        option.innerText = element.nome
+        select[0].appendChild(option)
+    })
+
+    select[0].addEventListener('click', async ev => {
+        let selected = ev.target.options[ev.target.selectedIndex]
+
+        if (selected.value != 0) {
+            select[1].setAttribute = 'disabled'
+            select[1].innerHTML = ''
+            disciplina = selected.innerText
+            let res = await fetch('http://localhost:1234/disciplina/' + disciplina)
+            let data = await res.json()
+
+            data.forEach((element, index) => {
+                let option = document.createElement('option')
+                option.value = index + 1
+                option.innerText = element.nome
+                select[1].appendChild(option)
+            })
+            select[1].remove(select[1].firstChild)
+            select[1].removeAttribute('disabled')
+        }
+    })
+
+    select[1].addEventListener('click', async ev => {
+        let selected = ev.target.options[ev.target.selectedIndex]
+        if (selected.value != 0) {
+            conteudo = selected.innerText
+        }
+    })
+
+    //set list object when click to send it as POST body | Ln53 - Ln109
+    upload.querySelector('button').addEventListener('click', async ev => {
+        let questao = document.querySelectorAll('div.lista div.questao')
+        let dt = new Date()
+        let lista = {
+            titulo: upload.querySelector('input').value,
+            data: {
+                dia: `${dt.getDate()}/${dt.getMonth()}/${dt.getFullYear()}`,
+                horas: `${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+            },
+            disciplina: disciplina,
+            conteudo: conteudo,
+            questoes: []
+        }
+
+            questao.forEach(element => {
+            let alternativas = []
+            let tipo = ''
+            let respostas = []
+            
+            element.querySelectorAll('input').forEach(element => {
+                if(element.checked) {
+                    tipo = element.parentElement.innerText.trim()
+                }
+            })
+
+            element.querySelectorAll('div.alternativa').forEach(element => {
+                let span = element.querySelector('span')
+
+                alternativas.push({
+                    num: span.innerText.replace(/\(|\)/g,''),
+                    texto: element.querySelector('textarea').value.trim(),
+                    certa: element.dataset.resp
+                })
+                if(element.dataset.resp == 'true'){
+                    respostas.push(span.innerText.replace(/\(|\)/g, ''))
+                }
+            })
+
+            lista.questoes.push({
+                tipo: tipo,
+                pergunta: element.querySelector('div.pergunta textarea').value.trim(),
+                alternativas: alternativas,
+                respostas: respostas
+            })
+        })
+        //Send lista to the server
+        await fetch('http://localhost:1234/up/lista/artes/', {
+            method: 'POST',
+            body: JSON.stringify(lista),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+    })
+
+    //Change question type (1: Objetiva, 2: Somatória, 3: Verdadeiro ou Falso) | Ln110 - Ln195
     const changeQuestionType = (input, container) => {
         let div = document.createElement('div')
         let span = document.createElement('span')
@@ -107,10 +194,12 @@
         }
     }
 
+    //Calls changeQuestionType() when click on the form area | Ln198 - Ln200
     questao.querySelector('div.tipo form').addEventListener('click', ev => {
         changeQuestionType(ev.target, questao)
     })
 
+    //Add new question to the list | Ln203 - Ln215
     addQst.addEventListener('click', ev => {
         let clone = questao.cloneNode(true)
 

@@ -7,7 +7,7 @@ const db = mysql.createConnection({
     database: 'triste'
 })
 
-db.connect((err) => {
+db.connect(err => {
     if (err) {
         beep()
         throw err

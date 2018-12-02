@@ -1,18 +1,10 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const session = require('express-session')
-
-const db = require('./dbconnect/mysql')
-const auth = require('./routes/auth')
+const user = require('./routes/user')
 const upload = require('./routes/upload')
 const download = require('./routes/download')
 const disciplina = require('./routes/disciplina')
 
 const app = express()
-
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
-app.use(express.static(__dirname + '/public'))
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -20,7 +12,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/auth', auth)
+app.use('/user', user)
 app.use('/up', upload)
 app.use('/download', download)
 app.use('/disciplina', disciplina)

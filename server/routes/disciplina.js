@@ -6,9 +6,9 @@ const db = require('../dbconnect/mysql')
 router.get('/:q*?', (req, res) => {
     let query
     if (!req.params.q) {
-        query = `SELECT * FROM disciplina`
+        query = `SELECT nome, tipo FROM disciplina`
     } else if (req.params.q === 'medio' || req.params.q === 'tecnico') {
-        query = `SELECT * FROM disciplina WHERE tipo = '${req.params.q}'`
+        query = `SELECT nome, tipo FROM disciplina WHERE tipo = '${req.params.q}'`
     } else {
         query = `
             SELECT c.nome FROM conteudo c

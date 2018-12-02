@@ -6,20 +6,35 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="styles/form.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/signup.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy"
+        crossorigin="anonymous"></script>
     <script src="scripts/signup.js" defer></script>
 </head>
 <body>
     <main>
-        <img src="" alt="" class="logo">
+        <img src="images/a.jpg" alt="" class="logo">
         <form>
             <input type="text" id="name" placeholder="Nome">
             <input type="text" id="user" placeholder="Usuário">
             <input type="password" id="pass" placeholder="Senha">
             <input type="password" id="pasc" placeholder="Confirmar senha">
-            <button>Cadastrar</button>
+            <div>
+                <label>
+                    <input type="radio" name="alunoprof">
+                    Aluno
+                </label>
+                <label>
+                    <input type="radio" name="alunoprof">
+                    Professor
+                </label>
+            </div>
+            <div></div>
+            <button type="button">Cadastrar</button>
         </form>
-        <a href="index.html">Voltar</a>
+        <a href="index.html" class="return"><i class="fas fa-chevron-left fa-lg"></i>
+            <span>Login</span>
+        </a>
     </main>
 </body>
 </html>

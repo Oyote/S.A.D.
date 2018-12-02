@@ -1,9 +1,9 @@
 (async () => {
-    const container = document.querySelector('div#fileUpload')
+    const container = document.querySelector('div#upload')
     const form = container.querySelector('form')
     const label = container.querySelector('label')
-    const fileInput = container.querySelector('#fileUpload form label input[type=file]')
-    const titledesc = container.querySelectorAll('#fileUpload input[type=text]')
+    const fileInput = container.querySelector('#upload form label input[type=file]')
+    const titledesc = container.querySelectorAll('#upload input[type=text]')
     const select = container.querySelectorAll('select')
     const button = container.querySelector('button')
     let disciplina = ''
