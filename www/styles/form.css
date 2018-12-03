@@ -67,6 +67,10 @@ main form button {
     border-radius: 10px;
 }
 
+main form div.selectContainer {
+    width: 60%;
+}
+
 main form select {
     border: none;
     background: none;

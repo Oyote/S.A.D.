@@ -1,10 +1,11 @@
 //Improvisadasso
-
-if (!localStorage.getItem('usuario')) {
-    window.location.href = 'index.html'
-}
-
-document.querySelector('body main div#menu').lastElementChild.addEventListener('click', ev => {
-    localStorage.removeItem('usuario')
-    window.location.href = 'index.html'
-})
+(() => {
+    if (!localStorage.getItem('usuario')) {
+        window.location.href = 'index.html'
+    }
+    
+    document.querySelector('body main div#menu').lastElementChild.addEventListener('click', ev => {
+        localStorage.clear()
+        window.location.href = 'index.html'
+    })
+})()

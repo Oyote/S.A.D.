@@ -1,31 +1,38 @@
 const form = document.querySelector('form')
 const submit = form.querySelector('button')
 const radioInputContainer = form.querySelector('div')
-let disciplina = ''
+let turoudisc = ''
+
+const appendSelect = data => {
+    let select = document.createElement('select')
+    
+    data.forEach(element => {
+        let option = document.createElement('option')
+
+        option.innerText = element.nome
+        select.appendChild(option)
+    })
+    form.querySelectorAll('div')[1].appendChild(select)
+    form.style.height = '50%'
+
+    turoudisc = select.options[select.selectedIndex].innerText
+
+    select.addEventListener('click', () => turoudisc = select.options[select.selectedIndex].innerText)
+}
 
 radioInputContainer.addEventListener('click', async ev => {
-    if (ev.target.innerText.trim() == 'Professor' && !form.querySelector('select')) {
-        let select = document.createElement('select')
-
+    if (ev.target.innerText.trim() == 'Professor') {
         let res = await fetch('http://localhost:1234/disciplina')
         let data = await res.json()
-
-        data.forEach(element => {
-            let option =  document.createElement('option')
-            
-            option.innerText = element.nome
-            select.appendChild(option)
-        })
-        form.querySelectorAll('div')[1].appendChild(select)
-        form.style.height = '50%'
-
-        disciplina = select.options[select.selectedIndex].innerText
-
-        select.addEventListener('click', () => disciplina = select.options[select.selectedIndex].innerText )
-    } else {
-        form.style.height = '45%'
+        
         form.querySelectorAll('div')[1].innerHTML = ''
-        disciplina = ''
+        appendSelect(data)
+    } else if (ev.target.innerText.trim() == 'Aluno') {
+        form.querySelectorAll('div')[1].innerHTML = ''
+        let res = await fetch('http://localhost:1234/turma')
+        let data = await res.json()
+
+        appendSelect(data)
     }
 })
 
@@ -41,10 +48,8 @@ submit.addEventListener('click', async () => {
         senha: input[2].value,
         confSenha: input[3].value,
         alunoprof: radio.parentElement.innerText.trim(),
-        disciplina: disciplina
+        turoudisc: turoudisc
     }
-
-    console.log(data.disciplina)
 
     if (!data.nome || !data.usuario || !data.senha || !data.confSenha)
         return swal('Ops!', 'Os campos não podem ser vazios!', 'error')

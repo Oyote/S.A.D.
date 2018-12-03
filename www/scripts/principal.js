@@ -6,21 +6,21 @@ const loadContent = data => {
     data.forEach(element => {
         let div = document.createElement('div')
         let label = document.createElement('label')
-        let display = document.createElement('div')
+        // let display = document.createElement('div')
         let arquivos = document.createElement('span')
         let quantidade = document.createElement('span')
 
         div.className = 'content'
         label.innerText = element.nome
-        display.className = 'display'
+        // display.className = 'display'
         arquivos.innerText = 'Arquivos: '
         quantidade.innerText = element.quantidade
 
         central.appendChild(div)
         div.appendChild(label)
-        div.appendChild(display)
-        display.appendChild(arquivos)
-        display.appendChild(quantidade)
+        // div.appendChild(display)
+        // display.appendChild(arquivos)
+        // display.appendChild(quantidade)
 
         div.addEventListener('click', ev => {
             while(central.firstElementChild) {
@@ -31,9 +31,8 @@ const loadContent = data => {
 }
 
 const loadSubject = async area => {
-    let res = await fetch('http://localhost:1234/disciplina/' + area)
+    let res = await fetch('http://localhost:1234/disciplina/' + area + '/'+localStorage.getItem('turma'))
     let data = await res.json()
-    
     central.querySelectorAll('*').forEach(element => element.remove(element))
     
     data.forEach(element => {
@@ -56,11 +55,13 @@ const loadSubject = async area => {
                 central.removeChild(central.firstElementChild) 
             }
             let title = element.querySelector('label').innerText
-            let res = await fetch('http://localhost:1234/disciplina/' + title)
+            let res = await fetch('http://localhost:1234/disciplina/conteudo/' + localStorage.getItem('turma')+ '/' + title)
+
             if(res.status === 404) {
                 console.log('Não')
             } else {
                 let data = await res.json()
+                console.log(data)
                 loadContent(data)
             }
         })
