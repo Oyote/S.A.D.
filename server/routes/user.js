@@ -59,6 +59,7 @@ router.post('/login', (req, res) => {
         } else if (result.length === 0) {
             res.status(404).send()
         } else {
+            //Checa se é aluno ou professor
             let idpessoa = JSON.parse(JSON.stringify(result))[0].idpessoa
             let query2 = `SELECT t.nome AS turma FROM turma t
                 INNER JOIN aluno a ON a.idturma = t.idturma 

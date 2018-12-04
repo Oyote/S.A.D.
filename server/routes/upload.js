@@ -39,12 +39,12 @@ router.post('/:disc/:cont', upload.single('arq'), (req, res) => {
         `
     
     db.query(query, (err, result) => {
-        if (err || result == '') {
+        if (err) {
             console.log(err)
             res.status(404).send()
         } else {
             console.log('File data inserted')
-            res.status(200).send(result)
+            res.status(200).send('Foi')
         }
     })
 })

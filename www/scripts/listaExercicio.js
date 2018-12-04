@@ -3,49 +3,28 @@
     const addQst = lista.querySelector('button')
     const questao = lista.querySelector('div.questao')
     const upload = document.querySelector('#upload')
-    const select = upload.querySelectorAll('select')
-    let disciplina = ''
+    const select = upload.querySelector('select')
     let conteudo = ''
 
     //Set first radio input to true | Ln11
     questao.querySelector('div.tipo form input[type="radio"]').checked = true
     
     //Set send options area | Ln14 - Ln50
-    let res = await fetch('http://localhost:1234/disciplina')
+    let res = await fetch('http://localhost:1234/disciplina/conteudo/' + localStorage.getItem('disciplina'))
     let data = await res.json()
 
-    data.forEach((element, index) => {
+    data.forEach(element => {
         let option = document.createElement('option')
-        option.value = index + 1
         option.innerText = element.nome
-        select[0].appendChild(option)
+        select.appendChild(option)
     })
 
-    select[0].addEventListener('click', async ev => {
+    select.addEventListener('click', async ev => {
         let selected = ev.target.options[ev.target.selectedIndex]
-
-        if (selected.value != 0) {
-            select[1].setAttribute = 'disabled'
-            select[1].innerHTML = ''
-            disciplina = selected.innerText
-            let res = await fetch('http://localhost:1234/disciplina/' + disciplina)
-            let data = await res.json()
-
-            data.forEach((element, index) => {
-                let option = document.createElement('option')
-                option.value = index + 1
-                option.innerText = element.nome
-                select[1].appendChild(option)
-            })
-            select[1].remove(select[1].firstChild)
-            select[1].removeAttribute('disabled')
-        }
-    })
-
-    select[1].addEventListener('click', async ev => {
-        let selected = ev.target.options[ev.target.selectedIndex]
-        if (selected.value != 0) {
+        console.log(selected)
+        if(selected.value != 0) {
             conteudo = selected.innerText
+            console.log(conteudo)
         }
     })
 
@@ -55,11 +34,12 @@
         let dt = new Date()
         let lista = {
             titulo: upload.querySelector('input').value,
+            descricao: upload.querySelectorAll('input')[1].value,
             data: {
                 dia: `${dt.getDate()}/${dt.getMonth()}/${dt.getFullYear()}`,
                 horas: `${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
             },
-            disciplina: disciplina,
+            disciplina: localStorage.getItem('disciplina'),
             conteudo: conteudo,
             questoes: []
         }
@@ -95,7 +75,7 @@
                 respostas: respostas
             })
         })
-        //Send lista to the server
+        //Send list to the server
         await fetch('http://localhost:1234/up/lista/artes/', {
             method: 'POST',
             body: JSON.stringify(lista),

@@ -6,34 +6,39 @@ const loadContent = data => {
     data.forEach(element => {
         let div = document.createElement('div')
         let label = document.createElement('label')
-        // let display = document.createElement('div')
-        let arquivos = document.createElement('span')
-        let quantidade = document.createElement('span')
 
         div.className = 'content'
         label.innerText = element.nome
-        // display.className = 'display'
-        arquivos.innerText = 'Arquivos: '
-        quantidade.innerText = element.quantidade
 
         central.appendChild(div)
         div.appendChild(label)
-        // div.appendChild(display)
-        // display.appendChild(arquivos)
-        // display.appendChild(quantidade)
 
         div.addEventListener('click', ev => {
             while(central.firstElementChild) {
                 central.removeChild(central.firstElementChild) 
-            }                
+            }
+            console.log(ev.target.innerText)
         })
     })
 }
 
 const loadSubject = async area => {
     let res = await fetch('http://localhost:1234/disciplina/' + area + '/'+localStorage.getItem('turma'))
-    let data = await res.json()
+    
     central.querySelectorAll('*').forEach(element => element.remove(element))
+    if (res.status === 404) {
+        let span = document.createElement('span')
+        let i = document.createElement('i')
+
+        span.className = 'nop'
+        span.innerText = 'Nenhum resultado foi encontrado'
+        i.setAttribute('class', 'fas fa-robot fa-2x')
+        span.appendChild(i)
+        central.appendChild(span)
+        return;
+    }
+
+    let data = await res.json()
     
     data.forEach(element => {
         let container = document.createElement('div')
@@ -54,25 +59,27 @@ const loadSubject = async area => {
             while(central.firstElementChild) {
                 central.removeChild(central.firstElementChild) 
             }
-            let title = element.querySelector('label').innerText
-            let res = await fetch('http://localhost:1234/disciplina/conteudo/' + localStorage.getItem('turma')+ '/' + title)
 
-            if(res.status === 404) {
-                console.log('Não')
-            } else {
+            let title = element.querySelector('label').innerText
+            let res = await fetch('http://localhost:1234/disciplina/conteudo/' + title + '/' + localStorage.getItem('turma'))
+
+            if(res.status !== 404) {
                 let data = await res.json()
-                console.log(data)
                 loadContent(data)
             }
         })
     })
-
 }
 
 loadSubject('medio')
 
+//gambiarra
+if (!localStorage.getItem('disciplina')) {
+    header.firstElementChild.style.background = '#515151'
+} else {
+    window.location.href = 'listaExercicio.html'
+}
 //Botões "Ensino Médio" e "Curso Técnico"
-header.firstElementChild.style.background = '#515151'
     header.addEventListener('click', ev => {
         let btns = header.querySelectorAll('button')
         let currentEl = ev.target

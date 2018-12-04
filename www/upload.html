@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
     <link rel="stylesheet" type="text/css" href="styles/upload.css" />
     <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="scripts/auth.js" defer></script>
     <script src="scripts/upload.js" async defer></script>
 </head>
@@ -32,12 +33,8 @@
                 </form>
                 <input type="text" name="titulo" placeholder="Título do arquivo">
                 <input type="text" name="descricao" placeholder="Descricão do arquivo">
-                <select class="disciplina">
-                    <option value="0" disabled selected>Selecione uma disciplina</option>
-                </select>
-                <select class="conteudo" disabled>
+                <select class="conteudo">
                     <option value="0" disabled selected>Selecione um conteúdo</option>
-                    <option value="">asdf</option>
                 </select>
                 <button>Enviar</button>
             </div>
@@ -46,10 +43,6 @@
             <a href="principal.html">
                 <i class="fas fa-home fa-2x"></i>
                 <label>Início</label>
-            </a>
-            <a href="search.html">
-                <i class="fas fa-search fa-2x"></i>
-                <label>Buscar</label>
             </a>
             <a href="upload.html">
                 <i class="fas fa-file-upload fa-2x"></i>

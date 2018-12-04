@@ -1,7 +1,6 @@
 const form = document.querySelector('form')
 const submit = form.querySelector('button')
 
-
 submit.addEventListener('click', async () => {
     let loginData = {
         login: form.querySelectorAll('input')[0].value,
