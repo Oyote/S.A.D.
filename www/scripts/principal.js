@@ -2,7 +2,7 @@ const header = document.querySelector('#header')
 const central = document.querySelector('#central')
 
 const loadContent = data => {
-    console.log(data)
+    console.log(data[0])
     data.forEach(element => {
         let div = document.createElement('div')
         let label = document.createElement('label')
@@ -13,11 +13,62 @@ const loadContent = data => {
         central.appendChild(div)
         div.appendChild(label)
 
-        div.addEventListener('click', ev => {
+        div.addEventListener('click', async ev => {
             while(central.firstElementChild) {
                 central.removeChild(central.firstElementChild) 
             }
-            console.log(ev.target.innerText)
+            header.innerHTML = ''
+            let div = document.createElement('div')
+            let a = document.createElement('a')
+            let i = document.createElement('i')
+            let hspan = document.createElement('span')
+
+            a.href = 'principal.html'
+            i.setAttribute('class', 'fas fa-chevron-left fa-lg')
+            hspan.innerText = 'Voltar'
+            div.className = 'return'
+            header.appendChild(div)
+            div.appendChild(a)
+            div.appendChild(hspan)
+            a.appendChild(i)
+            console.log(ev.target)
+
+            let res = await fetch('http://localhost:1234/download/' + ev.target.innerText)
+
+            if (res.status === 200) {
+                let data = await res.json()
+                console.log(data)
+                let loadedContent = document.createElement('div')
+                let loadedContentHeader = document.createElement('div')
+                let loadedContentTitle = document.createElement('span')
+                let loadedContentDesc = document.createElement('span')
+                
+                loadedContent.className = 'loadedContent'
+                central.appendChild(loadedContent)
+                loadedContentHeader.className = 'loadedContentHeader'
+                loadedContent.appendChild(loadedContentHeader)
+                loadedContentTitle.innerText = ev.target.innerText
+                loadedContentTitle.className = 'loadedContentTitle'
+                loadedContentHeader.appendChild(loadedContentTitle)
+                loadedContentDesc.innerText = data[0].descricao
+                loadedContentDesc.className = 'loadedContentDesc'
+                loadedContentHeader.appendChild(loadedContentDesc)
+                
+                data.forEach(element => {
+                    let div = document.createElement('div')
+                    let label = document.createElement('label')
+
+                    label.innerText = element.titulo
+                    div.className = 'content'
+                    div.dataset.arqname = element.nome
+                    loadedContent.appendChild(div)
+                    div.appendChild(label)
+
+                    div.addEventListener('click', async ev => {
+                        window.open('http://localhost:1234/download/file/' + div.dataset.arqname)
+                    })
+                })
+            }
         })
     })
 }
@@ -63,7 +114,7 @@ const loadSubject = async area => {
             let title = element.querySelector('label').innerText
             let res = await fetch('http://localhost:1234/disciplina/conteudo/' + title + '/' + localStorage.getItem('turma'))
 
-            if(res.status !== 404) {
+            if(res.status == 200) {
                 let data = await res.json()
                 loadContent(data)
             }
@@ -94,4 +145,3 @@ if (!localStorage.getItem('disciplina')) {
         })
     ev.target.innerText === 'Ensino Médio' ? loadSubject('medio') : loadSubject('tecnico')
 })
-

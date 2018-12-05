@@ -45,10 +45,11 @@
 
 #central div.content {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    align-items: center;
     width: 90%;
-    height: 13vh;
+    height: 11vh;
     margin-top: 2vh;
     padding: 2vw 3vw 2vw 3vw;
     border: 1px solid #2d2d2d;
@@ -92,7 +93,32 @@ div.return span {
 
 #central div.loadedContent {
     display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 98%;
+    min-height: 100%;
+}
+
+#central div.loadedContent div.loadedContentHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    margin: 2vw 0 2vw 0;
+}
+
+#central div.loadedContent div.loadedContentHeader span.loadedContentTitle {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    height: 7vh;
+    font-size: 1.5em;
+}
+
+#central div.loadedContent div.loadedContentHeader span.loadedContentDesc {
+    margin-top: 3vw;
+    text-align: justify;
+    width: 88vw;
 }

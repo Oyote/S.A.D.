@@ -8,6 +8,7 @@ body {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     color: rgb(200, 200, 200);
+    font-weight: 300
 }
 
 a {

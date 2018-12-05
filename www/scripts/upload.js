@@ -25,27 +25,25 @@
 
     fileInput.onchange = () => label.innerText = fileInput.files[0].name
 
-    button.addEventListener('click', async () => {
-        if (fileInput.files.length != 0 && conteudo != '' && !titledesc[0].value && !titledesc[1].value) {
+    button.addEventListener('click', async ev => {
+        if (fileInput.files.length != 0 && conteudo != '') {
             let formData = new FormData()
             formData.append('titulo', titledesc[0].value)
             formData.append('descricao', titledesc[1].value)
             formData.append('arq', fileInput.files[0])
             
-            let res = await fetch(`http://localhost:1234/up/${localStorage.getItem('disciplina')}/asdf`, {
+            let res = await fetch(`http://localhost:1234/up/${localStorage.getItem('disciplina')}/${conteudo}`, {
                 method: 'POST',
                 body: formData
             })
-            if (res.status === 200){
-                console.log(res.body)
+            if (res.status == 200) {
+                swal({
+                    title: '',
+                    text: '',
+                    icon: "success",
+                    button: false
+                })
             }
-        } else {
-            swal({
-                title: 'Ops!',
-                text: 'Os campos não podem estar vazios!',
-                icon: "error",
-                button: false
-            })
         }
     })
 })()

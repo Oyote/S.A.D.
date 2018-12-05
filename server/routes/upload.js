@@ -43,8 +43,7 @@ router.post('/:disc/:cont', upload.single('arq'), (req, res) => {
             console.log(err)
             res.status(404).send()
         } else {
-            console.log('File data inserted')
-            res.status(200).send('Foi')
+            res.status(200).send()
         }
     })
 })
