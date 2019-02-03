@@ -1,2 +1,2 @@
 # S.A.D.
-Projeto Integrador dale dele dele dole
+This is an mobile application developed as a school project at IFC - Camboriú.
